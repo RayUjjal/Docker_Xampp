@@ -75,3 +75,4 @@ RUN	docker-php-ext-enable ds imagick igbinary memcached
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN a2enmod rewrite
+RUN a2enmod headers
