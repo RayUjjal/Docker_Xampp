@@ -1,0 +1,63 @@
+version: '3.7'
+
+services:
+  apache:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: apache
+    ports:
+      - "80:80"
+    volumes:
+      - ./htdocs:/var/www/html/
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+      # - ./apache2.conf:/etc/apache2/apache2.conf
+    networks:
+      - xampp-network
+    depends_on:
+      - db
+
+  db:
+    image: "mariadb:latest"
+    container_name: db
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD : "yes"
+      MARIADB_ROOT_PASSWORD : null
+      MARIADB_ROOT_HOST : "%"
+      MARIADB_MYSQL_LOCALHOST_USER : "root"
+      MYSQL_USER: ujjal
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - xampp-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    links:
+      - db:mariadb
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: null
+      MAX_EXECUTION_TIME: 1000
+      MEMORY_LIMIT: 1G
+      UPLOAD_LIMIT: 1G
+    ports:
+      - "8080:80"
+    networks:
+      - xampp-network
+
+networks:
+  xampp-network:
+    driver: bridge
+
+
+volumes:
+  mysql_data:
+  htdocs:
