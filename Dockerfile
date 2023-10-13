@@ -1,6 +1,6 @@
 FROM php:8.0-apache
 
-COPY uploads.ini /usr/local/etc/php/conf.d/
+# COPY uploads.ini /usr/local/etc/php/conf.d/
 RUN apt-get update -y
 RUN apt-get -y install libenchant-2-dev
 RUN apt-get -y install gcc make autoconf libc-dev pkg-config libzip-dev

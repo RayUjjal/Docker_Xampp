@@ -11,7 +11,9 @@ services:
     volumes:
       - ./htdocs:/var/www/html/
       - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
-      # - ./apache2.conf:/etc/apache2/apache2.conf
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    mem_limit: 8G
+    cpus: 2
     networks:
       - xampp-network
     depends_on:
@@ -29,6 +31,8 @@ services:
       MARIADB_MYSQL_LOCALHOST_USER : "root"
       MYSQL_USER: ujjal
       MYSQL_PASSWORD: root
+    mem_limit: 8G
+    cpus: 2
     volumes:
       - ./mysql_data:/var/lib/mysql
     networks:
@@ -48,6 +52,8 @@ services:
       MAX_EXECUTION_TIME: 1000
       MEMORY_LIMIT: 1G
       UPLOAD_LIMIT: 1G
+    mem_limit: 8G
+    cpus: 2
     ports:
       - "8080:80"
     networks:
