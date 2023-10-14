@@ -24,13 +24,8 @@ services:
     container_name: db
     ports:
       - "3306:3306"
-    environment:
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD : "yes"
-      MARIADB_ROOT_PASSWORD : null
-      MARIADB_ROOT_HOST : "%"
-      MARIADB_MYSQL_LOCALHOST_USER : "root"
-      MYSQL_USER: ujjal
-      MYSQL_PASSWORD: root
+    env_file:
+      - .env
     mem_limit: 8G
     cpus: 2
     volumes:
